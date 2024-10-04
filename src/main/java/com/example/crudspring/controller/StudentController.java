@@ -3,6 +3,7 @@ package com.example.crudspring.controller;
 import com.example.crudspring.entity.Student;
 import com.example.crudspring.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,8 +27,13 @@ public class StudentController {
     }
 
     @PostMapping
-    public void saveUpdate(@RequestBody Student student) { //el request body me indica que debo pasar datos de una estructura
-        studentService.saveOrUpdate(student);
+    public void createStudent(@RequestBody Student student) { //el request body me indica que debo pasar datos de una estructura
+        studentService.createStudent(student);
+    }
+
+    @PatchMapping("/{studentId}")
+    public ResponseEntity<Student> updateStudent(@PathVariable("studentId") Long studentId, @RequestBody Student student) {
+        return ResponseEntity.ok(studentService.updateStudent(studentId, student));
     }
 
     @DeleteMapping("/{studentId}")
